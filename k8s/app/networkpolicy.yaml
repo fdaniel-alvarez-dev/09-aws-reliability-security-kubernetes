@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: platform-sentinel-deny-all
+  namespace: platform-security
+spec:
+  podSelector:
+    matchLabels:
+      app: platform-sentinel
+  policyTypes:
+    - Ingress
+    - Egress

@@ -35,3 +35,67 @@ What you get:
 - Add PITR with WAL archiving + periodic restore tests.
 - Add SLOs (p95 query latency, replication lag) and alert thresholds.
 - Add automated migration checks (preflight, locks, backout plan).
+
+## Kubernetes security baseline (what is real in this repo)
+
+This repository includes a minimal Kubernetes manifest set under `k8s/` that is designed to be:
+- safe by default (securityContext + least privilege markers)
+- reviewable (plain YAML + kustomize layout)
+- testable (static validation in `demo` mode)
+
+Validate the Kubernetes manifests locally:
+
+```bash
+make k8s-validate
+```
+
+## Security validation (local, demo-safe)
+
+Run the local security hygiene checks:
+
+```bash
+make security-validate
+```
+
+## Test modes (demo vs production)
+
+This repository supports exactly two test execution modes controlled by `TEST_MODE`:
+
+- `demo`: runs **mocked/static** checks only (no Docker, no external calls)
+- `production`: runs **real integration** checks when correctly configured (Docker Compose)
+
+Run demo-mode tests:
+
+```bash
+make test
+```
+
+Run production-mode tests (guarded):
+
+```bash
+PRODUCTION_TESTS_CONFIRM=1 make test-production
+```
+
+If production prerequisites are missing, the runner prints a precise list of what to set/install.
+
+## Sponsorship and authorship
+
+Sponsored by:
+CloudForgeLabs  
+https://cloudforgelabs.ainextstudios.com/  
+support@ainextstudios.com
+
+Built by:
+Freddy D. Alvarez  
+https://www.linkedin.com/in/freddy-daniel-alvarez/
+
+For job opportunities, contact:  
+it.freddy.alvarez@gmail.com
+
+## License
+
+Personal and other non-commercial use is free.
+
+Commercial use requires paid permission. Contact `it.freddy.alvarez@gmail.com`.
+
+Note: the included `LICENSE` is intentionally **not** an OSI-approved open-source license. It is a noncommercial license that aligns with the “personal use free, commercial use paid” model.

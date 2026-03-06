@@ -1,0 +1,31 @@
+09 - Problem Statement (Repository Validation Contract)
+
+Purpose
+This document defines the business context, technical requirements, and evaluation criteria that this repository is expected to satisfy.
+It is intentionally company- and role-agnostic.
+
+Business context (generic)
+- A team must build a compliant, secure landing zone and run workloads with strict security requirements.
+- Kubernetes is part of the runtime story; platform defaults must be hardened and reviewable.
+- Automation, evidence, and guardrails are required to make migrations and operations safe.
+
+Technical requirements (what must be true)
+1) Kubernetes hardening surface
+   - The repository contains a minimal, reviewable Kubernetes manifest set under `k8s/`.
+   - A local validation command exists to catch unsafe defaults (least privilege markers, network policy).
+
+2) Security validation surface
+   - The repository provides a local security validation command that checks for expected hygiene and documentation.
+   - CI includes secret scanning and basic quality gates.
+
+3) Testability with two explicit modes
+   - Tests have two explicit modes:
+     - demo: mocks/fakes only (no Docker, no external calls)
+     - production: real integrations when correctly configured and explicitly acknowledged
+   - If production prerequisites are missing, the runner prints exactly what is missing and how to re-run.
+
+Top 3 pain points this repository must solve
+1) “Security controls exist only in docs, not as enforceable artifacts.”
+2) “Kubernetes workloads drift into unsafe defaults without guardrails.”
+3) “Integration tests are unsafe or fail unclearly without configuration.”
+
